@@ -15,7 +15,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" nuxt to="/home"> Iniciar Sesión </v-btn>
+          <v-btn color="primary" nuxt to="/login"> Iniciar Sesión </v-btn>
           <v-btn color="secondary" nuxt to="/register"> Crear una cuenta </v-btn>
           <v-spacer />
         </v-card-actions>
