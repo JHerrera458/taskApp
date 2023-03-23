@@ -104,6 +104,11 @@ export default {
           const url = "http://localhost:3001/accounts"
           this.$axios.post(url, this.account).then((response) => {
             console.log("Cuenta creada correctamente", response)
+            this.$swal.fire(
+              'Cuenta creada!',
+              'Exitosamente!',
+              'success'
+            )
           }).catch((error) => {
             console.log("Ha ocurrido un error", error)
           }).finally(() => {

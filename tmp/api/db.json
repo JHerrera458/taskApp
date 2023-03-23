@@ -15,6 +15,14 @@
       "pass": "Admin123!",
       "polity": true,
       "id": 2
+    },
+    {
+      "firstname": "Julian",
+      "lastname": "Herrera",
+      "email": "juliann4567@gmail.com",
+      "pass": "Admin123",
+      "polity": true,
+      "id": 3
     }
   ],
   "tasks": [

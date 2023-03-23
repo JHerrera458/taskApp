@@ -36,6 +36,9 @@
 
 <script lang="ts">
 export default {
+    beforeMount() {
+        this.loadAccounts()
+    },
     layout: "blank",
     data() {
         return {
@@ -58,8 +61,6 @@ export default {
             this.showPassword = !this.showPassword;
         },
         login() {
-            this.loadAccounts()
-            const refFormAccount: any = this.$refs['formAccount']
             let confirm = false
             this.accounts.forEach(account => {
                 if (account.email == this.account.email && account.pass == this.account.password) {
@@ -67,10 +68,18 @@ export default {
                 }
             });
             if (confirm) {
-                alert('Sesión iniciada')
-                
+                this.$swal.fire({
+                    icon: 'success',
+                    title: 'Iniciaste sección',
+                    text: 'Bienvenido a TareasApp'
+                })
             } else {
-                alert('email o contraseña incorrectas')
+                this.$swal.fire({
+                    icon: 'error',
+                    title: 'Algo salió mal...',
+                    text: 'Datos incorrectos!',
+                    footer: '<a href="">Olvidé mi correo o contraseña</a>'
+                })
             }
         },
         loadAccounts() {
