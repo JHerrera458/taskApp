@@ -73,6 +73,7 @@ export default {
                     title: 'Iniciaste sección',
                     text: 'Bienvenido a TareasApp'
                 })
+                this.$router.push('/home')
             } else {
                 this.$swal.fire({
                     icon: 'error',
