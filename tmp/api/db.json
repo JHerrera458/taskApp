@@ -29,7 +29,11 @@
     {
       "description": "Consumir API de Marvel",
       "due_date": "2023-04-02",
-      "subject": "MarvelAPP - Edit2",
+      "subject": {
+        "name": "Desarrollo Web",
+        "description": "Front y Back End, profesor: Santiago Urrego",
+        "id": 1
+      },
       "is_active": true,
       "is_public": false,
       "id": 1

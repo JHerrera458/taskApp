@@ -17,7 +17,7 @@
             <v-form>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="Nombre" v-model="myTask.subject" counter="20"></v-text-field>
+                  <v-combobox v-model="myTask.subject" :items="subjects" label="Materia" item-text="name" item-value="id"></v-comboBox>
                 </v-col>
                 <v-col cols="12">
                   <v-text-field label="Descripción" v-model="myTask.description"></v-text-field>
@@ -65,6 +65,9 @@
           <v-icon small @click="loadTaskToUpdate(item)">mdi-pencil</v-icon>
           <v-icon small @click="deleteTask(item)">mdi-delete</v-icon>
         </template>
+        <template #item.subject="{ item }">
+          {{ item.subject.name }}
+        </template>
       </v-data-table>
     </v-col>
   </v-row>
@@ -75,6 +78,7 @@ import { Task } from '../assets/models/Task'
 export default {
   beforeMount() {
     this.loadTasks()
+    this.loadSubjects()
   },
   data() {
     return {
@@ -98,7 +102,8 @@ export default {
         is_active: true,
         is_public: false
       },
-      tasks: []
+      tasks: [],
+      subjects: []
     }
 
   },
@@ -107,6 +112,15 @@ export default {
       const url = "http://localhost:3001/tasks"
       this.$axios.get(url).then(response => {
         this.tasks = response.data
+      }).catch(error => {
+        console.log(error);
+
+      })
+    },
+    loadSubjects() {
+      const url = "http://localhost:3001/subjects"
+      this.$axios.get(url).then(response => {
+        this.subjects = response.data
       }).catch(error => {
         console.log(error);
 
