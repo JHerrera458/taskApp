@@ -1,6 +1,5 @@
 <template>
   <v-row>
-
     <v-col cols="12">
       <v-dialog persistent :overlay="false" max-width="500px" v-model="dialog">
 
@@ -9,7 +8,8 @@
         </template>
         <v-card>
           <v-card-title primary-title>
-            Crear tarea
+            <span v-if="!editing"> Crear tarea</span>
+            <span v-else> Actualizar tarea </span>
             <v-spacer></v-spacer>
             <v-icon @click="dialog = false">mdi-close</v-icon>
           </v-card-title>
@@ -44,8 +44,12 @@
                   <v-checkbox label="Es pública?" v-model="myTask.is_public"></v-checkbox>
                 </v-col>
                 <v-col cols="12">
-                  <v-btn color="success" @click="saveTask" :loading="loading">Guardar tarea</v-btn>
-
+                  <span v-if="editing">
+                    <v-btn color="success" @click="updateTask" :loading="loading">Actualizar tarea</v-btn>
+                  </span>
+                  <span v-else>
+                    <v-btn color="success" @click="saveTask" :loading="loading">Crear tarea</v-btn>
+                  </span>
                 </v-col>
               </v-row>
 
@@ -62,11 +66,7 @@
           <v-icon small @click="deleteTask(item)">mdi-delete</v-icon>
         </template>
       </v-data-table>
-
     </v-col>
-
-
-
   </v-row>
 </template>
 
@@ -81,6 +81,7 @@ export default {
       loading: false,
       dialog: false,
       menuDate: false,
+      editing: false,
       headers: [
         { text: "Id", value: "id", },
         { text: "Materia", value: "subject", },
@@ -97,16 +98,7 @@ export default {
         is_active: true,
         is_public: false
       },
-      tasks: [
-        {
-          id: 1,
-          description: "Seguimiento 3",
-          due_date: "31-marzo",
-          subject: "Dllo Web",
-          is_active: true,
-          is_public: false
-        }
-      ]
+      tasks: []
     }
 
   },
@@ -120,6 +112,7 @@ export default {
 
       })
     },
+
     clearMyTask() {
       this.myTask = {
         description: "",
@@ -156,9 +149,33 @@ export default {
     },
 
     loadTaskToUpdate(task: Task) {
-      alert(task.description)
+      this.editing = true;
+      this.dialog = true;
+      this.myTask = { ...task }
     },
-
+    updateTask() {
+      const url = `http://localhost:3001/tasks/${this.myTask.id}`
+      this.loading = true
+      this.$axios.put(url, this.myTask).then(response => {
+        this.clearMyTask()
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Tarea edita',
+          text: 'La tarea fue editada exitosamente'
+        })
+        this.dialog = false
+        this.loadTasks()
+      }).catch(error => {
+        this.$swal.fire({
+          icon: 'error',
+          title: 'La tarea NO fue editada',
+          text: 'Ocurrió un error al editar la tarea'
+        })
+      }).finally(() => {
+        this.loading = false
+        this.editing = false
+      })
+    },
     deleteTask(task: Task) {
 
       this.$swal.fire({

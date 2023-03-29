@@ -27,12 +27,19 @@
   ],
   "tasks": [
     {
-      "description": "Entrega 1",
-      "due_date": "2023-03-23",
-      "subject": "Test",
+      "description": "Consumir API de Marvel",
+      "due_date": "2023-04-02",
+      "subject": "MarvelAPP - Edit2",
       "is_active": true,
       "is_public": false,
-      "id": 2
+      "id": 1
+    }
+  ],
+  "subjects": [
+    {
+      "name": "Desarrollo Web",
+      "description": "Front y Back End, profesor: Santiago Urrego",
+      "id": 1
     }
   ]
 }
